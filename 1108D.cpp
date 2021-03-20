@@ -33,36 +33,67 @@ const int N = 3e5, M = N;
 void solve() {
   int i, j, n, m;
   cin>>n;
-  vector<int> v(n);
-  fo(i,n) cin>>v[i];
-  vector<int> tillNow(n);
-  tillNow[0]=0;
-  tillNow[1]=0;
-  for(int i=2;i<n;i++){
-    tillNow[i] = tillNow[i-2]+v[i-2];
+  string str;
+  cin>>str;
+  int counter=0;
+  for(int i=1;i<n-1;i++){
+  	if(str[i]==str[i-1]){
+  		counter++;
+  		if(str[i]=='R'){
+  			if(str[i+1]=='R'){
+  				str[i]='B';
+  			}
+  			else if(str[i+1]=='B'){
+  				str[i]='G';
+  			}
+  			else{
+  				str[i]='B';
+  			}
+  		}
+  		else if(str[i]=='G'){
+  			if(str[i+1]=='G'){
+  				str[i]='B';
+  			}
+  			else if(str[i+1]=='B'){
+  				str[i]='R';
+  			}
+  			else{
+  				str[i]='B';
+  			}
+  		}
+  		else{
+  			if(str[i+1]=='B'){
+  				str[i]='R';
+  			}
+  			else if(str[i+1]=='R'){
+  				str[i]='G';
+  			}
+  			else{
+  				str[i]='R';
+  			}
+  		}
+  	}
   }
-  // fo(i,n){
-  //   deb(tillNow[i]);
-  // }
-  int even =0,odd = 0;
-  int sum=0;
-  int mn = INT_MAX;
-  for(int i=0;i<n;i++){
-    if(i%2==0){
-      // deb(sum);
-      even = tillNow[i] + (n-i/2)*v[i];
-      
-      sum = even + odd;
-      if(i!=0) mn = min(sum,mn);
-    }
-    else{
-      odd = tillNow[i] + (n-i/2)*v[i];
-      sum = odd + even;
-      // deb(sum);
-      mn = min(sum,mn);
-    }
-  }
-  cout<<mn<<endl;
+  i=n-1;
+  if(str[n-1]==str[n-2]){
+  		counter++;
+  		if(str[i]=='R'){
+  				str[i]='B';
+  			
+  		}
+  		else if(str[i]=='G'){
+  			
+  				str[i]='B';
+  			
+  			
+  		}
+  		else{
+  				str[i]='R';
+  		}
+  	}
+  	cout<<counter<<'\n';
+  	cout<<str;
+
 }
 
 int32_t main()
@@ -72,7 +103,7 @@ int32_t main()
   freopen("input.txt", "r", stdin);
   freopen("output.txt", "w", stdout);
 #endif
-  w(t)
+  
   solve();
   return 0;
 }

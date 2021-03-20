@@ -32,37 +32,39 @@ const int N = 3e5, M = N;
 
 void solve() {
   int i, j, n, m;
-  cin>>n;
-  vector<int> v(n);
-  fo(i,n) cin>>v[i];
-  vector<int> tillNow(n);
-  tillNow[0]=0;
-  tillNow[1]=0;
-  for(int i=2;i<n;i++){
-    tillNow[i] = tillNow[i-2]+v[i-2];
+  int u,r,d,l;
+  cin>>n>>u>>r>>d>>l;
+  int flag=0;
+  for(int i=0;i<16;i++){
+  	int nu=u,nr=r,nl=l,nd=d;
+  	if(i&1){
+  		nl--;
+  		nu--;
+  	}
+  	if(i&2){
+  		nr--;
+  		nu--;
+  	}
+  	if(i&4){
+  		nr--;
+  		nd--;
+  	}
+  	if(i&8){
+  		nd--;
+  		nl--;
+  	}
+  	if(min({nu,nr,nd,nl})>=0 && max({nu,nr,nd,nl})<=n-2){
+  		flag=1;break;
+  	}
   }
-  // fo(i,n){
-  //   deb(tillNow[i]);
-  // }
-  int even =0,odd = 0;
-  int sum=0;
-  int mn = INT_MAX;
-  for(int i=0;i<n;i++){
-    if(i%2==0){
-      // deb(sum);
-      even = tillNow[i] + (n-i/2)*v[i];
-      
-      sum = even + odd;
-      if(i!=0) mn = min(sum,mn);
-    }
-    else{
-      odd = tillNow[i] + (n-i/2)*v[i];
-      sum = odd + even;
-      // deb(sum);
-      mn = min(sum,mn);
-    }
+  if(flag){
+  	cout<<"YES\n";
   }
-  cout<<mn<<endl;
+  else{
+  	cout<<"NO\n";
+  }
+		
+
 }
 
 int32_t main()

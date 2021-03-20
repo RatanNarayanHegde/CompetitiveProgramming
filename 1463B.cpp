@@ -35,34 +35,34 @@ void solve() {
   cin>>n;
   vector<int> v(n);
   fo(i,n) cin>>v[i];
-  vector<int> tillNow(n);
-  tillNow[0]=0;
-  tillNow[1]=0;
-  for(int i=2;i<n;i++){
-    tillNow[i] = tillNow[i-2]+v[i-2];
+  vector<int> even(n),odd(n);
+  int og=0;
+  fo(i,n){
+  	if(i%2==0){
+  		even[i]=1;
+  		odd[i]  =v[i];
+  	}
+  	else{
+  		even[i] = v[i];
+  		odd[i] =1;
+  	}
+  	og+=v[i];
   }
-  // fo(i,n){
-  //   deb(tillNow[i]);
-  // }
-  int even =0,odd = 0;
-  int sum=0;
-  int mn = INT_MAX;
+  int sum =0;
   for(int i=0;i<n;i++){
-    if(i%2==0){
-      // deb(sum);
-      even = tillNow[i] + (n-i/2)*v[i];
-      
-      sum = even + odd;
-      if(i!=0) mn = min(sum,mn);
-    }
-    else{
-      odd = tillNow[i] + (n-i/2)*v[i];
-      sum = odd + even;
-      // deb(sum);
-      mn = min(sum,mn);
-    }
+  	sum +=  abs(even[i]-v[i]);
   }
-  cout<<mn<<endl;
+  if(2*sum<=og){
+  	fo(i,n){
+  		cout<<even[i]<<' ';
+  	}
+  }
+  else{
+  	fo(i,n){
+  		cout<<odd[i]<<' ';
+  	}
+  }
+  cout<<'\n';
 }
 
 int32_t main()

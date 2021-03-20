@@ -29,40 +29,38 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 const int N = 3e5, M = N;
 //=======================
 
+bool check(int i,vector<int> v,int l,int r,int x){
+	int sum =0;
+	int mn = INT_MAX;
+	int mx = -1;
+	for(int j=0;j<v.size();j++){
+		int p = pow(2,j);
+		if(i & p){
+			sum+= v[j];
+			mn = min(mn,v[j]);
+			mx = max(mx,v[j]);
+		}
+	}
+	// deb(sum);
+	if(sum>=l && sum<=r && (mx-mn)>=x){
+		return 1;
+	}
+	else return 0;
+}
 
 void solve() {
   int i, j, n, m;
-  cin>>n;
+  int l,r,x;
+  cin>>n>>l>>r>>x;
   vector<int> v(n);
-  fo(i,n) cin>>v[i];
-  vector<int> tillNow(n);
-  tillNow[0]=0;
-  tillNow[1]=0;
-  for(int i=2;i<n;i++){
-    tillNow[i] = tillNow[i-2]+v[i-2];
+  fo(i,n){
+  	cin>>v[i];
   }
-  // fo(i,n){
-  //   deb(tillNow[i]);
-  // }
-  int even =0,odd = 0;
-  int sum=0;
-  int mn = INT_MAX;
-  for(int i=0;i<n;i++){
-    if(i%2==0){
-      // deb(sum);
-      even = tillNow[i] + (n-i/2)*v[i];
-      
-      sum = even + odd;
-      if(i!=0) mn = min(sum,mn);
-    }
-    else{
-      odd = tillNow[i] + (n-i/2)*v[i];
-      sum = odd + even;
-      // deb(sum);
-      mn = min(sum,mn);
-    }
+  int count = 0;
+  for(int i=0;i<pow(2,n);i++){
+  	count += check(i,v,l,r,x);
   }
-  cout<<mn<<endl;
+  cout<<count;
 }
 
 int32_t main()
@@ -72,7 +70,7 @@ int32_t main()
   freopen("input.txt", "r", stdin);
   freopen("output.txt", "w", stdout);
 #endif
-  w(t)
+  
   solve();
   return 0;
 }

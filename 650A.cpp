@@ -33,36 +33,26 @@ const int N = 3e5, M = N;
 void solve() {
   int i, j, n, m;
   cin>>n;
-  vector<int> v(n);
-  fo(i,n) cin>>v[i];
-  vector<int> tillNow(n);
-  tillNow[0]=0;
-  tillNow[1]=0;
-  for(int i=2;i<n;i++){
-    tillNow[i] = tillNow[i-2]+v[i-2];
+  vector<pair<int,int>> v(n);
+  map<int,int> xmpp,ympp;
+  map<pair<int,int>,int> freq;
+  fo(i,n){
+  	cin>>v[i].ff>>v[i].ss;
+  	xmpp[v[i].ff]++;
+  	ympp[v[i].ss]++;
+  	freq[v[i]]++;
   }
-  // fo(i,n){
-  //   deb(tillNow[i]);
-  // }
-  int even =0,odd = 0;
-  int sum=0;
-  int mn = INT_MAX;
+  int ans =0;
   for(int i=0;i<n;i++){
-    if(i%2==0){
-      // deb(sum);
-      even = tillNow[i] + (n-i/2)*v[i];
-      
-      sum = even + odd;
-      if(i!=0) mn = min(sum,mn);
-    }
-    else{
-      odd = tillNow[i] + (n-i/2)*v[i];
-      sum = odd + even;
-      // deb(sum);
-      mn = min(sum,mn);
-    }
+  	ans+= xmpp[v[i].ff] + ympp[v[i].ss] - (2*freq[v[i]]);
   }
-  cout<<mn<<endl;
+  ans/=2;
+  for(auto it:freq){
+  	// deb(it.ss);
+  	ans+= (it.ss)*(it.ss-1) /2;
+  }
+  cout<<ans;
+  
 }
 
 int32_t main()
@@ -72,7 +62,7 @@ int32_t main()
   freopen("input.txt", "r", stdin);
   freopen("output.txt", "w", stdout);
 #endif
-  w(t)
+  
   solve();
   return 0;
 }
