@@ -33,53 +33,49 @@ const int N = 3e5, M = N;
 void solve() {
   int i, j, n, m;
   cin>>n;
-  int b[n+2];
-  int sum=0;
-  fo(i,n+2){
-    cin>>b[i];
-    sum+=b[i];
+  vi v(n);
+  fo(i,n) cin>>v[i];
+  int ans;
+  vi v1(v);
+  int flag=0;
+  for(int i=1;i<n;i++){
+  	if(v[i]<v[i-1]){
+  		flag=1;
+  		break;
+  	}
   }
-  sort(b,b+(n+2));
-  vector<int> ans;
-  //last
-  int last = b[n+1];
-  int flag=0,val,ind;
-  for(int i=0;i<n+1;i++){
-    if(sum-last-b[i]==last){
-      flag=1;
-      val=b[i];
-      ind=i;
-      break;
-    }
+  if(!flag) {
+  	cout<<0<<endl;
+  	return;
   }
-  if(flag){
-    for(int i=0;i<n+1;i++){
-      if(i!=ind){
-        ans.push_back(b[i]);
-      }
-    }
-  }
-  else{
-    int s=b[n];
-    int x = b[n+1];
-    if(sum-s-x==s){
-      flag=1;
-      for(int i=0;i<n;i++){
-        ans.push_back(b[i]);
-      }
-    }
-  }
-  if(flag){
-    for(int i=0;i<n;i++){
-      cout<<ans[i]<<' ';
-    }
-
-  }
-  else{
-    cout<<-1;
-  }
-  cout<<'\n';
-
+  for(int i=0;i<=35;i++){
+  	int ok=1;
+  	fo(j,n){
+  		v1[j] = v[j];
+  	}
+  	for(int j=1;j<n;j++){
+  		if(v1[j]>=v1[j-1]){
+  			continue;
+  		}
+  		for(int x=0;x<=i;x++){
+  			v1[j]+= pow(2,x);
+  		}
+  		for(int x=i;x>=0;x--){
+  			if(v1[j]-pow(2,x)>=v1[j-1]){
+  				v1[j]-= pow(2,x);
+  			}
+  		}
+  		if(v1[j]<v1[j-1]){
+  			ok=0;
+  			break;
+  		}
+  	}
+  	if(ok){
+  		ans =i+1;
+  		break;
+  	}
+  }	
+  cout<<ans<<endl;	
 }
 
 int32_t main()

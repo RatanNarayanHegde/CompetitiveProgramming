@@ -28,57 +28,44 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 const int N = 3e5, M = N;
 //=======================
-
+int d;
+int findAns(std::vector<int> v,int ele){
+	int res=0;
+	for(auto i:v){
+		res+= (abs(i-ele))/d;
+	}
+	return res;
+}
 
 void solve() {
   int i, j, n, m;
-  cin>>n;
-  int b[n+2];
-  int sum=0;
-  fo(i,n+2){
-    cin>>b[i];
-    sum+=b[i];
+  cin>>n>>m>>d;
+  int matrix[n][m];
+  int mx=-1;
+  vector<int> v;
+  fo(i,n){
+  	fo(j,m){
+  		cin>>matrix[i][j];
+  		mx = max(mx,matrix[i][j]);
+  		v.push_back(matrix[i][j]);
+  	}
   }
-  sort(b,b+(n+2));
-  vector<int> ans;
-  //last
-  int last = b[n+1];
-  int flag=0,val,ind;
-  for(int i=0;i<n+1;i++){
-    if(sum-last-b[i]==last){
-      flag=1;
-      val=b[i];
-      ind=i;
-      break;
-    }
+  fo(i,n){
+  	fo(j,m){
+  		if((mx-matrix[i][j])%d!=0){
+  			cout<<-1;return;
+  		}
+  	}
   }
-  if(flag){
-    for(int i=0;i<n+1;i++){
-      if(i!=ind){
-        ans.push_back(b[i]);
-      }
-    }
+  int res=0;
+  sort(v.begin(),v.end());
+  n=v.size();
+  if(v.size()&1){
+  	cout<<findAns(v,v[n/2]);
   }
   else{
-    int s=b[n];
-    int x = b[n+1];
-    if(sum-s-x==s){
-      flag=1;
-      for(int i=0;i<n;i++){
-        ans.push_back(b[i]);
-      }
-    }
+  	cout<<min(findAns(v,v[n/2-1]),findAns(v,v[n/2]));
   }
-  if(flag){
-    for(int i=0;i<n;i++){
-      cout<<ans[i]<<' ';
-    }
-
-  }
-  else{
-    cout<<-1;
-  }
-  cout<<'\n';
 
 }
 
@@ -89,7 +76,7 @@ int32_t main()
   freopen("input.txt", "r", stdin);
   freopen("output.txt", "w", stdout);
 #endif
-  w(t)
+  
   solve();
   return 0;
 }

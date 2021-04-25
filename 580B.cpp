@@ -31,55 +31,26 @@ const int N = 3e5, M = N;
 
 
 void solve() {
-  int i, j, n, m;
-  cin>>n;
-  int b[n+2];
-  int sum=0;
-  fo(i,n+2){
-    cin>>b[i];
-    sum+=b[i];
+  int i,d, j, n, m;
+  cin>>n>>d;
+  vector<pii> v(n);
+  fo(i,n){
+  	cin>>v[i].ff>>v[i].ss;
   }
-  sort(b,b+(n+2));
-  vector<int> ans;
-  //last
-  int last = b[n+1];
-  int flag=0,val,ind;
-  for(int i=0;i<n+1;i++){
-    if(sum-last-b[i]==last){
-      flag=1;
-      val=b[i];
-      ind=i;
-      break;
-    }
+  sort(v.begin(),v.end());
+  int left=0,right=0;
+  int mx=0,curr=v[0].ss;
+  mx=curr;
+  while(left<n && right<n){
+  	while(right+1<n && v[right+1].ff-v[left].ff<d){
+  		right++;
+  		curr+= v[right].ss;
+  	}
+  	mx=max(curr,mx);
+  	curr-=v[left].ss;
+  	left++;
   }
-  if(flag){
-    for(int i=0;i<n+1;i++){
-      if(i!=ind){
-        ans.push_back(b[i]);
-      }
-    }
-  }
-  else{
-    int s=b[n];
-    int x = b[n+1];
-    if(sum-s-x==s){
-      flag=1;
-      for(int i=0;i<n;i++){
-        ans.push_back(b[i]);
-      }
-    }
-  }
-  if(flag){
-    for(int i=0;i<n;i++){
-      cout<<ans[i]<<' ';
-    }
-
-  }
-  else{
-    cout<<-1;
-  }
-  cout<<'\n';
-
+  cout<<mx;
 }
 
 int32_t main()
@@ -89,7 +60,7 @@ int32_t main()
   freopen("input.txt", "r", stdin);
   freopen("output.txt", "w", stdout);
 #endif
-  w(t)
+  
   solve();
   return 0;
 }

@@ -32,54 +32,26 @@ const int N = 3e5, M = N;
 
 void solve() {
   int i, j, n, m;
-  cin>>n;
-  int b[n+2];
-  int sum=0;
-  fo(i,n+2){
-    cin>>b[i];
-    sum+=b[i];
+  string str;
+  cin>>str;
+  int ans=0;
+  n=str.size();
+  vector<bool> used(n,false);
+  for(i=1;i<n;i++){
+  	bool used_here=false;
+  	if(str[i]==str[i-1] && !used[i-1]){
+  		used_here=true;
+  	}
+  	if(i>=2 && str[i]==str[i-2] && !used[i-2]){
+  		used_here=true;
+  	}
+  	used[i]=used_here;
+  	if(used_here) {
+  		ans++;
+  		// cout<<i<<endl;
+  	}
   }
-  sort(b,b+(n+2));
-  vector<int> ans;
-  //last
-  int last = b[n+1];
-  int flag=0,val,ind;
-  for(int i=0;i<n+1;i++){
-    if(sum-last-b[i]==last){
-      flag=1;
-      val=b[i];
-      ind=i;
-      break;
-    }
-  }
-  if(flag){
-    for(int i=0;i<n+1;i++){
-      if(i!=ind){
-        ans.push_back(b[i]);
-      }
-    }
-  }
-  else{
-    int s=b[n];
-    int x = b[n+1];
-    if(sum-s-x==s){
-      flag=1;
-      for(int i=0;i<n;i++){
-        ans.push_back(b[i]);
-      }
-    }
-  }
-  if(flag){
-    for(int i=0;i<n;i++){
-      cout<<ans[i]<<' ';
-    }
-
-  }
-  else{
-    cout<<-1;
-  }
-  cout<<'\n';
-
+  cout<<ans<<'\n';
 }
 
 int32_t main()
