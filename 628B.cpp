@@ -1,67 +1,21 @@
-
-#include<bits/stdc++.h>
-using namespace std;
-
-#define ff              first
-#define fo(i,n)         for(i=0;i<n;i++)
-#define Fo(i,k,n)       for(i=k;k<n?i<n:i>n;k<n?i+=1:i-=1)
-#define deb(x)          cout << #x << "=" << x << endl
-#define deb2(x, y)      cout << #x << "=" << x << "," << #y << "=" << y << endl
-#define ss              second
-#define int             long long
-#define pb              push_back
-#define mp              make_pair
-#define pii             pair<int,int>
-#define vi              vector<int>
-#define mii             map<int,int>
-#define pqb             priority_queue<int>
-#define pqs             priority_queue<int,vi,greater<int> >
-#define setbits(x)      __builtin_popcountll(x)
-#define zrobits(x)      __builtin_ctzll(x)
-#define mod             1000000007
-#define inf             1e18
-#define ps(x,y)         fixed<<setprecision(y)<<x
-#define w(x)            int x; cin>>x; while(x--)
-#define FIO             ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
-mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count());
-
-
-const int N = 3e5, M = N;
-//=======================
-
-
-void solve() {
-  int i, j, n, m;
-  string str;
-  cin>>str;
-  n=str.size();
-  int ans=0;
-  if((str[0]-'0')%4==0){
-  	ans=1;
-  }
-  for(int i=1;i<n;i++){
-  	string num;
-  	num+=str[i-1];
-  	num+=str[i];
-  	int d = stoi(num);
-  	if(d%4==0){
-  		ans+=i;
-  	}
-  	if((str[i]-'0')%4 == 0){
-  		ans+=1;
-  	}
-  }
-  printf("%lld",ans);
-}
-
-int32_t main()
-{
-  FIO;
-#ifndef ONLINE_JUDGE
-  freopen("input.txt", "r", stdin);
-  freopen("output.txt", "w", stdout);
-#endif
-  
-  solve();
-  return 0;
+int Solution::maxArr(vector<int> &A) {
+    int n=A.size();
+    if(n<=1) return 0;
+    int prevMx1=A[0]+0;
+    int prevMx2=A[0]-0;
+    int prevMx3=-A[0]+0;
+    int prevMx4=-A[0]-0;
+    int ret=0;
+    for(int i=0;i<n;i++){
+        int mx1=prevMx1-A[i]-i;
+        int mx2=prevMx2-A[i]+i;
+        int mx3=prevMx3+A[i]-i;
+        int mx4=prevMx4+A[i]+i;
+        ret = max({ret,mx1,mx2,mx3,mx4});
+        prevMx1= max(prevMx1,A[i]+i);
+        prevMx2=max(prevMx2,A[i]-i);
+        prevMx3=max(prevMx3,-A[i]+i);
+        prevMx4=max(prevMx4,-A[i]-i);
+    }
+    return ret;
 }

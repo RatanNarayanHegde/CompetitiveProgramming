@@ -33,53 +33,11 @@ const int N = 3e5, M = N;
 void solve() {
   int i, j, n, m;
   cin>>n;
-  int b[n+2];
-  int sum=0;
-  fo(i,n+2){
-    cin>>b[i];
-    sum+=b[i];
-  }
-  sort(b,b+(n+2));
-  vector<int> ans;
-  //last
-  int last = b[n+1];
-  int flag=0,val,ind;
-  for(int i=0;i<n+1;i++){
-    if(sum-last-b[i]==last){
-      flag=1;
-      val=b[i];
-      ind=i;
-      break;
-    }
-  }
-  if(flag){
-    for(int i=0;i<n+1;i++){
-      if(i!=ind){
-        ans.push_back(b[i]);
-      }
-    }
-  }
-  else{
-    int s=b[n];
-    int x = b[n+1];
-    if(sum-s-x==s){
-      flag=1;
-      for(int i=0;i<n;i++){
-        ans.push_back(b[i]);
-      }
-    }
-  }
-  if(flag){
-    for(int i=0;i<n;i++){
-      cout<<ans[i]<<' ';
-    }
-
-  }
-  else{
-    cout<<-1;
-  }
-  cout<<'\n';
-
+  vi a(n);
+  fo(i,n) cin>>a[i];
+  int left[n]={0};
+  int right[n]={0};
+  
 }
 
 int32_t main()
